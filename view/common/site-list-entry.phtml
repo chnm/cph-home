@@ -1,0 +1,21 @@
+<?php
+$summary = $showSummary ? $site->summary() : null;
+$hyperlink = $this->plugin('hyperlink');
+?>
+    <div class="medium-6 cell">
+        <div class="callout grid-x grid-margin-x">
+            <h3><?php echo $this->hyperlink($site->title(), $site->siteUrl(), ['class' => 'site-link']); ?></h3>
+            <div class="cell medium-12">
+                <?php if ($summary): ?>
+                    <p class="site-summary"><?php echo nl2br($this->escapeHtml($summary)); ?></p>
+                <?php endif; ?>
+            </div>
+            <?php $siteID = $site->id(); ?>
+            <?php $items = $this->api()->search('items', ['site_id'=>$siteID,'item_set_id'=>'28416','limit'=>'4'])->getContent(); ?>
+            <?php foreach ($items as $item): ?>
+                <div class="cell medium-6 site-image">
+                    <?php echo $hyperlink->raw($this->thumbnail($item, 'square'), $item->siteUrl($site->slug())); ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
